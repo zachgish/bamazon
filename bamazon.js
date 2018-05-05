@@ -5,24 +5,27 @@ var connection = mysql.createConnection({
     host: "localhost",
     port: 3306,
     user: "root",
-    password:"Password",
+    password:"",
     database: "bamazon"
 })
 
 connection.connect(function(err){
     if (err) throw err;
     console.log ("it worked!");
+    makeTable();
+    
 })
 
 var makeTable = function(){
-    connection.query("SELECT" * "FROM products", function (err,res){
+    connection.query("SELECT * FROM products", function (err,res){
+        console.log(res)
         for (var i=0; i<res.length; i++){
             console.log(res[i].itemid+" || " + res[i].productname+" || "+res[i].departmentname+" || "+res[i].price+" || "+res[i].stockquanity+"\n");
         }
         promptCustomer(res);
     })
 }
-var promptCustomer = function (re) {
+var promptCustomer = function (res) {
     inquirer.prompt([{
         type:"input",
         name:"choice",
